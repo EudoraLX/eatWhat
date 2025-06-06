@@ -1,16 +1,57 @@
-# a_eatwhat
+# 今天吃什么
 
-A new Flutter project.
+一个帮助用户决定"今天吃什么"的 Flutter 应用。
 
-## Getting Started
+## 功能特点
 
-This project is a starting point for a Flutter application.
+- 随机推荐菜品
+- 展示菜品详细信息
+- 支持收藏喜欢的菜品
+- 支持分享菜品信息
 
-A few resources to get you started if this is your first Flutter project:
+## 开发环境
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter 3.0.0 或更高版本
+- Dart 2.19.0 或更高版本
+- Windows 10 或更高版本
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 安装和运行
+
+1. 克隆项目
+```bash
+git clone [你的仓库地址]
+cd a_eatwhat
+```
+
+2. 安装依赖
+```bash
+flutter pub get
+```
+
+3. 运行项目
+```bash
+flutter run -d windows
+```
+
+## 项目结构
+
+```
+lib/
+  ├── models/      # 数据模型
+  ├── screens/     # 页面
+  ├── services/    # 服务
+  ├── widgets/     # 组件
+  └── main.dart    # 入口文件
+```
+
+## 贡献指南
+
+1. Fork 项目
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 创建 Pull Request
+
+## 许可证
+
+MIT License
