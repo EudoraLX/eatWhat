@@ -27,13 +27,20 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     _loadFavorites();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadFavorites();
+  }
+
   void _loadFavorites() {
     final favoriteIds = widget.favoriteService.getFavoriteIds();
-    _favoriteFoods = widget.foodService
-        .getAllFoods()
-        .where((food) => favoriteIds.contains(food.id))
-        .toList();
-    setState(() {});
+    setState(() {
+      _favoriteFoods = widget.foodService
+          .getAllFoods()
+          .where((food) => favoriteIds.contains(food.id))
+          .toList();
+    });
   }
 
   @override
@@ -43,10 +50,32 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         title: const Text('我的收藏'),
       ),
       body: _favoriteFoods.isEmpty
-          ? const Center(
-              child: Text(
-                '还没有收藏任何菜品哦',
-                style: TextStyle(fontSize: 16),
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.favorite_border,
+                    size: 64,
+                    color: Colors.grey[400],
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    '还没有收藏任何菜品哦',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '点击菜品上的心形图标来收藏',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                ],
               ),
             )
           : ListView.builder(

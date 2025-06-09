@@ -36,6 +36,71 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {});
   }
 
+  void _showRandomFoodDialog(BuildContext context) {
+    final randomFood = widget.foodService.getRandomFood(_selectedType);
+    if (randomFood != null) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('今天吃什么？'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                randomFood.name,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text('类型：${randomFood.type}'),
+              Text('价格：¥${randomFood.price.toStringAsFixed(2)}'),
+              if (randomFood.description != null) ...[
+                const SizedBox(height: 4),
+                Text(randomFood.description!),
+              ],
+              const SizedBox(height: 8),
+              // 血糖提示
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: randomFood.bloodSugarInfo.contains('⚠️')
+                      ? Colors.orange.withOpacity(0.1)
+                      : Colors.green.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  randomFood.bloodSugarInfo,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: randomFood.bloodSugarInfo.contains('⚠️')
+                        ? Colors.orange[800]
+                        : Colors.green[800],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _showRandomFoodDialog(context);
+              },
+              child: const Text('再换一个'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('就这个了'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +136,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 _buildTypeChip('家庭餐'),
                 _buildTypeChip('快餐'),
                 _buildTypeChip('正餐'),
+                _buildTypeChip('低脂餐'),
+                _buildTypeChip('低糖餐'),
               ],
             ),
           ),
@@ -99,26 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final randomFood = widget.foodService.getRandomFood(_selectedType);
-          if (randomFood != null) {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('今天吃什么？'),
-                content: Text(randomFood.name),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('再换一个'),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('就这个了'),
-                  ),
-                ],
-              ),
-            );
-          }
+          _showRandomFoodDialog(context);
         },
         child: const Icon(Icons.shuffle),
       ),

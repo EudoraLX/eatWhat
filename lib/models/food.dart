@@ -20,6 +20,7 @@ class Food {
   final int cookingTime; // 烹饪时间（分钟）
   final Map<String, double> nutrition; // 营养成分
   final FoodCategory category; // 分类
+  final String? bloodSugarNote; // 血糖提示
 
   const Food({
     required this.id,
@@ -32,6 +33,7 @@ class Food {
     required this.nutrition,
     required this.category,
     this.description,
+    this.bloodSugarNote,
   });
 
   // 获取分类的中文名称
@@ -53,6 +55,27 @@ class Food {
         return '低糖餐';
       case FoodCategory.balanced:
         return '营养均衡';
+    }
+  }
+
+  // 获取血糖提示
+  String get bloodSugarInfo {
+    if (bloodSugarNote != null) {
+      return bloodSugarNote!;
+    }
+    
+    // 根据营养成分计算血糖影响
+    final carbs = nutrition['碳水化合物'] ?? 0;
+    final sugar = nutrition['糖分'] ?? 0;
+    
+    if (carbs > 30 || sugar > 15) {
+      return '⚠️ 高糖食物，建议适量食用';
+    } else if (carbs > 20 || sugar > 10) {
+      return '⚠️ 中等糖分，注意控制食用量';
+    } else if (carbs > 10 || sugar > 5) {
+      return '✅ 低糖食物，可以适量食用';
+    } else {
+      return '✅ 极低糖食物，适合控糖人群';
     }
   }
 } 
