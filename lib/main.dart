@@ -1,36 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'services/food_service.dart';
+import 'services/favorite_service.dart';
 import 'screens/home_screen.dart';
-import 'services/theme_service.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  runApp(MyApp(prefs: prefs));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final SharedPreferences prefs;
+
+  const MyApp({super.key, required this.prefs});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ThemeService(),
-      child: Consumer<ThemeService>(
-        builder: (context, themeService, child) {
-          return MaterialApp(
-            title: '今天吃什么',
-            theme: ThemeData(
-              primarySwatch: Colors.orange,
-              brightness: Brightness.light,
-              useMaterial3: true,
-            ),
-            darkTheme: ThemeData(
-              brightness: Brightness.dark,
-              useMaterial3: true,
-            ),
-            themeMode: themeService.themeMode,
-            home: const HomeScreen(),
-          );
-        },
+    final foodService = FoodService();
+    final favoriteService = FavoriteService(prefs);
+
+    return MaterialApp(
+      title: '吃什么',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        useMaterial3: true,
+      ),
+      home: HomeScreen(
+        foodService: foodService,
+        favoriteService: favoriteService,
       ),
     );
   }

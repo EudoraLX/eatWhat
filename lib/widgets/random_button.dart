@@ -1,43 +1,36 @@
 import 'package:flutter/material.dart';
-import '../services/food_service.dart';
 import '../models/food.dart';
 
 class RandomButton extends StatelessWidget {
   final Function(Food) onFoodSelected;
-  final FoodService _foodService = FoodService();
 
-  RandomButton({
+  const RandomButton({
     super.key,
     required this.onFoodSelected,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: ElevatedButton(
-        onPressed: () {
-          final randomFood = _foodService.getRandomFood();
-          onFoodSelected(randomFood);
-        },
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(Icons.shuffle),
-            SizedBox(width: 8),
-            Text(
-              '随机一下',
-              style: TextStyle(fontSize: 18),
-            ),
-          ],
-        ),
-      ),
+    return ElevatedButton(
+      onPressed: () {
+        final food = Food(
+          id: 'temp',
+          name: '随机菜品',
+          type: '随机',
+          price: 0.0,
+          imageUrl: 'https://picsum.photos/800/450?random=0',
+          tags: ['随机'],
+          cookingTime: 0,
+          nutrition: {
+            '蛋白质': 0.0,
+            '脂肪': 0.0,
+            '碳水化合物': 0.0,
+          },
+          category: FoodCategory.regular,
+        );
+        onFoodSelected(food);
+      },
+      child: const Text('随机一下'),
     );
   }
 } 

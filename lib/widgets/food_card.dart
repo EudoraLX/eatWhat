@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../models/food.dart';
+import '../services/favorite_service.dart';
 
 class FoodCard extends StatelessWidget {
   final Food food;
+  final FavoriteService favoriteService;
+  final Function(bool) onFavoriteChanged;
 
   const FoodCard({
     super.key,
     required this.food,
+    required this.favoriteService,
+    required this.onFavoriteChanged,
   });
 
   @override
@@ -35,17 +40,50 @@ class FoodCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 食物名称
-                Text(
-                  food.name,
-                  style: Theme.of(context).textTheme.titleLarge,
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        food.name,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        favoriteService.isFavorite(food.id)
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: favoriteService.isFavorite(food.id)
+                            ? Colors.red
+                            : Colors.grey,
+                      ),
+                      onPressed: () async {
+                        await favoriteService.toggleFavorite(food.id);
+                        onFavoriteChanged(favoriteService.isFavorite(food.id));
+                      },
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 8),
-                // 食物描述
                 Text(
-                  food.description,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  '类型：${food.type}',
+                  style: const TextStyle(fontSize: 14),
                 ),
+                const SizedBox(height: 4),
+                Text(
+                  '价格：¥${food.price.toStringAsFixed(2)}',
+                  style: const TextStyle(fontSize: 14),
+                ),
+                if (food.description != null) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    food.description!,
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                ],
                 const SizedBox(height: 8),
                 // 标签
                 Wrap(
@@ -62,13 +100,6 @@ class FoodCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // 价格
-                    Text(
-                      '¥ ${food.price.toStringAsFixed(2)}',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                    ),
                     // 烹饪时间
                     Text(
                       '${food.cookingTime}分钟',
@@ -77,12 +108,6 @@ class FoodCard extends StatelessWidget {
                     // 操作按钮
                     Row(
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.favorite_border),
-                          onPressed: () {
-                            // TODO: 实现收藏功能
-                          },
-                        ),
                         IconButton(
                           icon: const Icon(Icons.share),
                           onPressed: () {
