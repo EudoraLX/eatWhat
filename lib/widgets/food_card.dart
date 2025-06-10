@@ -101,13 +101,12 @@ ${widget.food.cookingSteps.isEmpty ? '暂无制作方法' : widget.food.cookingS
           // 食物图片
           AspectRatio(
             aspectRatio: 16 / 9,
-            child: CachedNetworkImage(
-              imageUrl: widget.food.imageUrl,
+            child: Image.asset(
+              widget.food.imageUrl,
               fit: BoxFit.cover,
-              placeholder: (context, url) => const Center(
-                child: CircularProgressIndicator(),
+              errorBuilder: (context, error, stackTrace) => const Center(
+                child: Icon(Icons.error),
               ),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
           Padding(

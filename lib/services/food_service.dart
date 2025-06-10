@@ -8,7 +8,7 @@ class FoodService {
       name: '红烧肉',
       type: '正餐',
       price: 28.0,
-      imageUrl: 'https://picsum.photos/800/450?random=1',
+      imageUrl: 'assets/images/braised_pork.png',
       tags: ['家常菜', '肉类', '下饭菜'],
       cookingTime: 45,
       nutrition: {
@@ -32,7 +32,7 @@ class FoodService {
       name: '宫保鸡丁',
       type: '正餐',
       price: 22.0,
-      imageUrl: 'https://picsum.photos/800/450?random=2',
+      imageUrl: 'assets/images/kungpao_chicken.png',
       tags: ['川菜', '肉类', '下饭菜'],
       cookingTime: 20,
       nutrition: {
@@ -48,7 +48,7 @@ class FoodService {
       name: '兰州拉面',
       type: '快餐',
       price: 15.0,
-      imageUrl: 'https://picsum.photos/800/450?random=3',
+      imageUrl: 'assets/images/lanzhou_noodles.png',
       tags: ['面食', '快餐', '汤面'],
       cookingTime: 10,
       nutrition: {
@@ -64,7 +64,7 @@ class FoodService {
       name: '沙县小吃',
       type: '快餐',
       price: 12.0,
-      imageUrl: 'https://picsum.photos/800/450?random=4',
+      imageUrl: 'assets/images/shaanxi_food.png',
       tags: ['快餐', '小吃', '经济实惠'],
       cookingTime: 8,
       nutrition: {
@@ -80,7 +80,7 @@ class FoodService {
       name: '三明治',
       type: '学生餐',
       price: 8.0,
-      imageUrl: 'https://picsum.photos/800/450?random=5',
+      imageUrl: 'assets/images/sandwich.png',
       tags: ['西餐', '早餐', '便携'],
       cookingTime: 5,
       nutrition: {
@@ -96,7 +96,7 @@ class FoodService {
       name: '便当',
       type: '职场餐',
       price: 18.0,
-      imageUrl: 'https://picsum.photos/800/450?random=6',
+      imageUrl: 'assets/images/bento.png',
       tags: ['便当', '午餐', '营养均衡'],
       cookingTime: 15,
       nutrition: {
@@ -112,7 +112,7 @@ class FoodService {
       name: '家常炒菜',
       type: '家庭餐',
       price: 25.0,
-      imageUrl: 'https://picsum.photos/800/450?random=7',
+      imageUrl: 'assets/images/home_cooking.png',
       tags: ['家常菜', '炒菜', '下饭菜'],
       cookingTime: 20,
       nutrition: {
@@ -128,7 +128,7 @@ class FoodService {
       name: '清蒸鱼',
       type: '低脂餐',
       price: 32.0,
-      imageUrl: 'https://picsum.photos/800/450?random=8',
+      imageUrl: 'assets/images/steamed_fish.png',
       tags: ['海鲜', '低脂', '健康'],
       cookingTime: 25,
       nutrition: {
@@ -138,13 +138,21 @@ class FoodService {
       },
       category: FoodCategory.lowFat,
       description: '低脂高蛋白的健康选择',
+      cookingSteps: [
+        '鱼洗净，两面划几刀',
+        '放入姜片、葱段',
+        '加入适量料酒、盐',
+        '蒸锅水开后放入鱼',
+        '大火蒸8-10分钟',
+        '取出后淋上热油和蒸鱼豉油'
+      ],
     ),
     Food(
       id: '9',
       name: '鸡胸肉沙拉',
       type: '低脂餐',
       price: 28.0,
-      imageUrl: 'https://picsum.photos/800/450?random=9',
+      imageUrl: 'assets/images/chicken_salad.png',
       tags: ['沙拉', '低脂', '健身餐'],
       cookingTime: 15,
       nutrition: {
@@ -154,13 +162,21 @@ class FoodService {
       },
       category: FoodCategory.lowFat,
       description: '健身人士的最爱',
+      cookingSteps: [
+        '鸡胸肉切块，用盐和黑胡椒腌制',
+        '平底锅煎熟鸡胸肉',
+        '准备生菜、番茄、黄瓜等蔬菜',
+        '将所有食材放入碗中',
+        '加入橄榄油、柠檬汁调味',
+        '撒上坚果碎即可'
+      ],
     ),
     Food(
       id: '10',
       name: '糙米饭套餐',
       type: '低糖餐',
       price: 26.0,
-      imageUrl: 'https://picsum.photos/800/450?random=10',
+      imageUrl: 'assets/images/brown_rice.png',
       tags: ['低糖', '粗粮', '健康'],
       cookingTime: 30,
       nutrition: {
@@ -170,13 +186,21 @@ class FoodService {
       },
       category: FoodCategory.lowSugar,
       description: '低糖健康的选择',
+      cookingSteps: [
+        '糙米提前浸泡2小时',
+        '加入适量水煮饭',
+        '准备配菜：清炒时蔬',
+        '准备蛋白质：水煮鸡胸肉',
+        '准备调味料：低盐酱油',
+        '摆盘即可食用'
+      ],
     ),
     Food(
       id: '11',
       name: '蔬菜汤',
       type: '低糖餐',
       price: 18.0,
-      imageUrl: 'https://picsum.photos/800/450?random=11',
+      imageUrl: 'assets/images/vegetable_soup.png',
       tags: ['汤品', '低糖', '素食'],
       cookingTime: 20,
       nutrition: {
@@ -186,13 +210,20 @@ class FoodService {
       },
       category: FoodCategory.lowSugar,
       description: '清爽健康的汤品',
+      cookingSteps: [
+        '准备各种蔬菜：胡萝卜、西兰花、玉米等',
+        '锅中加入清水烧开',
+        '放入蔬菜煮至软烂',
+        '加入适量盐调味',
+        '最后撒上葱花即可'
+      ],
     ),
     Food(
       id: '12',
       name: '营养套餐',
       type: '营养均衡',
       price: 35.0,
-      imageUrl: 'https://picsum.photos/800/450?random=12',
+      imageUrl: 'assets/images/nutrition_set.png',
       tags: ['套餐', '营养均衡', '健康'],
       cookingTime: 25,
       nutrition: {
@@ -202,13 +233,21 @@ class FoodService {
       },
       category: FoodCategory.balanced,
       description: '营养均衡的套餐选择',
+      cookingSteps: [
+        '准备主食：杂粮饭',
+        '准备蛋白质：清蒸鱼或鸡胸肉',
+        '准备蔬菜：清炒时蔬',
+        '准备汤品：蔬菜汤',
+        '准备水果：时令水果',
+        '合理搭配摆盘'
+      ],
     ),
     Food(
       id: '13',
       name: '五谷杂粮饭',
       type: '营养均衡',
       price: 22.0,
-      imageUrl: 'https://picsum.photos/800/450?random=13',
+      imageUrl: 'assets/images/mixed_grains.png',
       tags: ['杂粮', '营养均衡', '健康'],
       cookingTime: 30,
       nutrition: {
@@ -218,6 +257,14 @@ class FoodService {
       },
       category: FoodCategory.balanced,
       description: '营养丰富的杂粮饭',
+      cookingSteps: [
+        '准备各种杂粮：糙米、小米、燕麦等',
+        '杂粮提前浸泡2小时',
+        '加入适量水煮饭',
+        '可以加入一些坚果',
+        '煮至软烂即可',
+        '可以搭配小菜食用'
+      ],
     ),
   ];
 
