@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/services.dart';
 import '../models/food.dart';
 import '../services/favorite_service.dart';
 
@@ -26,6 +27,67 @@ class _FoodCardState extends State<FoodCard> {
   void initState() {
     super.initState();
     _isFavorite = widget.favoriteService.isFavorite(widget.food.id);
+  }
+
+  void _showCookingSteps() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('${widget.food.name}的做法'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (widget.food.cookingSteps.isEmpty)
+                const Text('暂无烹饪步骤')
+              else
+                ...widget.food.cookingSteps.asMap().entries.map((entry) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${entry.key + 1}. ',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Expanded(child: Text(entry.value)),
+                      ],
+                    ),
+                  );
+                }),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('关闭'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _shareFoodInfo() {
+    final foodInfo = '''
+${widget.food.name}
+类型：${widget.food.type}
+价格：¥${widget.food.price.toStringAsFixed(2)}
+${widget.food.description != null ? '描述：${widget.food.description}\n' : ''}
+烹饪时间：${widget.food.cookingTime}分钟
+标签：${widget.food.tags.join('、')}
+${widget.food.bloodSugarInfo}
+
+制作方法：
+${widget.food.cookingSteps.isEmpty ? '暂无制作方法' : widget.food.cookingSteps.asMap().entries.map((entry) => '${entry.key + 1}. ${entry.value}').join('\n')}
+''';
+
+    Clipboard.setData(ClipboardData(text: foodInfo));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('菜品信息已复制到剪贴板')),
+    );
   }
 
   @override
@@ -145,10 +207,14 @@ class _FoodCardState extends State<FoodCard> {
                     Row(
                       children: [
                         IconButton(
+                          icon: const Icon(Icons.menu_book),
+                          tooltip: '查看做法',
+                          onPressed: _showCookingSteps,
+                        ),
+                        IconButton(
                           icon: const Icon(Icons.share),
-                          onPressed: () {
-                            // TODO: 实现分享功能
-                          },
+                          tooltip: '分享',
+                          onPressed: _shareFoodInfo,
                         ),
                       ],
                     ),

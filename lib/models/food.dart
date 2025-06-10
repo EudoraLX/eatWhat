@@ -21,6 +21,7 @@ class Food {
   final Map<String, double> nutrition; // 营养成分
   final FoodCategory category; // 分类
   final String? bloodSugarNote; // 血糖提示
+  final List<String> cookingSteps; // 烹饪步骤
 
   const Food({
     required this.id,
@@ -34,6 +35,7 @@ class Food {
     required this.category,
     this.description,
     this.bloodSugarNote,
+    this.cookingSteps = const [], // 默认为空列表
   });
 
   // 获取分类的中文名称

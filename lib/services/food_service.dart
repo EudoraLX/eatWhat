@@ -18,6 +18,14 @@ class FoodService {
       },
       category: FoodCategory.regular,
       description: '经典家常菜，肥而不腻',
+      cookingSteps: [
+        '五花肉切块，焯水去血水',
+        '锅中放油，爆香葱姜蒜',
+        '放入肉块翻炒至表面金黄',
+        '加入生抽、老抽、料酒、冰糖',
+        '加入适量清水，大火烧开后转小火慢炖',
+        '炖至肉烂，收汁即可'
+      ],
     ),
     Food(
       id: '2',
